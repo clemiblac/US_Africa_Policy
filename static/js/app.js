@@ -18,7 +18,7 @@ function updateMap(){
         "Sierra Leone":[8.6400349,-11.8400269],"Somalia":[8.3676771,49.083416], "South Africa":[-28.8166236,24.991639],
         "South Sudan":[7.8699431,29.6667897],"Sudan":[14.5844444,29.4917691],"Tanzania":[-6.5247123,35.7878438],
         "Togo":[8.7800265,1.0199765],"Tunisia":[33.8439408,9.400138],"Uganda":[1.5333554,32.2166578],
-        "Zambia":[-14.5186239,27.5599164],"Zimbabwe":[-18.4554963,29.7468414]
+        "Zambia":[-14.5186239,27.5599164],"Zimbabwe":[-18.4554963,29.7468414],"Continental Africa":[6.5085, 18.7832]
     }
 
     d3.json(geodata).then(function(d){
@@ -43,14 +43,14 @@ function updateMap(){
         var boundaries=d.features;
         //console.log(boundaries);
       
-        defaultCountry=boundaries.filter(c=>c.properties.name=="Algeria")
+        defaultCountry=boundaries.filter(c=>c.properties.name=="Continental Africa");
         //console.log(defaultCountry)
-        var poly=defaultCountry
-        var countrygeo = {"type":"FeatureCollection","features":poly}
+        var poly=defaultCountry;
+        var countrygeo = {"type":"FeatureCollection","features":poly};
         //console.log(poly)
         //console.log(countrygeo)
 
-        outline = L.geoJSON(countrygeo).addTo(map)
+        outline = L.geoJSON(countrygeo).addTo(map);
 
         
         d3.select('#SelectCountry').on('change',function(d){
@@ -61,12 +61,12 @@ function updateMap(){
             //console.log("user selection")
             //console.log(userSelection)
 
-            console.log("selected")
-            SelectedCountry=boundaries.filter(c=>c.properties.name==userSelection)
-            console.log(SelectedCountry)
-            var poly=SelectedCountry
-            var countrygeo_new = {"type":"FeatureCollection","features":poly}
-            console.log(poly)
+            console.log("selected");
+            SelectedCountry=boundaries.filter(c=>c.properties.name==userSelection);
+            console.log(SelectedCountry);
+            var poly=SelectedCountry;
+            var countrygeo_new = {"type":"FeatureCollection","features":poly};
+            console.log(poly);
             // console.log(countrygeo)
 
             if(outline){
@@ -78,18 +78,31 @@ function updateMap(){
             console.log(coordinates);
         
             
-        //     if(SelectedCountry == 'USA' || SelectedCountry == 'Russia'){
-        //         map.setView(coordinates, 1)
-                
-        //     }
-        //     else if(SelectedCountry == 'Venzuela' || SelectedCountry == 'Morocco'){
-        //         map.setView(coordinates,14)
-        //     }
-        //     else{
-        //         map.setView(coordinates,4)
-        //     }
+            if(SelectedCountry == 'Algeria'||SelectedCountry == 'Angola'||SelectedCountry == 'Uganda'||SelectedCountry == 'Zimbabwe'){
+                 map.setView(coordinates,2)    
+            }
+            else if(SelectedCountry == 'Benin' || SelectedCountry == 'Burkina Faso'|| SelectedCountry == 'Gabon'||
+                SelectedCountry == 'Ghana'|| SelectedCountry == 'Guinea' || SelectedCountry == 'Liberia'||
+                SelectedCountry == 'Malawi' || SelectedCountry == 'Senegal' || SelectedCountry == 'Sierra Leone'
+                || SelectedCountry == 'Tunisia'
+                ){
+                 map.setView(coordinates,6)
+            }
+            else if(SelectedCountry == 'Burundi'|| SelectedCountry == 'Djibouti'|| SelectedCountry == 'Equatorial Guinea'
+                || SelectedCountry == 'Swaziland'|| SelectedCountry == 'The Gambia'|| SelectedCountry == 'Guinea Bissau'
+                || SelectedCountry == 'Lesotho'|| SelectedCountry == 'Rwanda'|| SelectedCountry == 'Togo'
+                ){
+                map.setView(coordinates,18)
+            }
+            else if(SelectedCountry =="Continental Africa"){
+                map.setView(coordinates,1)
+            }
+            
+            else{
+                 map.setView(coordinates,4)
+            };
 
-        })
+        });
     })
 
 
